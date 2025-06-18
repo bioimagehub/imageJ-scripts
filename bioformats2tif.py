@@ -36,6 +36,7 @@ def process(srcDir, dstDir, currentDir, fileName, keepDirectories):
   # open with bioformats
   options = ImporterOptions()
   options.setColorMode(ImporterOptions.COLOR_MODE_GRAYSCALE)
+  options.setOpenAllSeries(True)
   options.setId(os.path.join(currentDir, fileName))
   imps = BF.openImagePlus(options)
   for i, imp in enumerate(imps):
