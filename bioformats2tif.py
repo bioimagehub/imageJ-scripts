@@ -3,9 +3,11 @@
 #@ String	(label = "File extension", value=".tif") ext
 #@ String	(label = "File name contains", value = "") containString
 #@ boolean (label = "Keep directory structure when saving", value = true) keepDirectories
+#@ String (lavbel = "Save format", choices={"Standard ImageJ TIF", "OME-TIF"}, style="listBox") saveType
 
-# See also Process_Folder.ijm for a version of this code
-# in the ImageJ 1.x macro language.
+# This code was based on the Jython template in imageJ for processing folders
+# THe only thing that was changed was with respect to loading with bioformats and saving with different formats
+
 
 import os
 from ij import IJ, ImagePlus
@@ -42,14 +44,19 @@ def process(srcDir, dstDir, currentDir, fileName, keepDirectories):
 	imps = BF.openImagePlus(options)
 	for i, imp in enumerate(imps):
 		outname, ext = os.path.splitext(fileName)
-		outname = outname + "_" + str(i+1) + ".tif"
+		outname = outname + "_" + str(i+1) 
 		
 		# Saving the image
 		saveDir = currentDir.replace(srcDir, dstDir) if keepDirectories else dstDir
 		if not os.path.exists(saveDir):
 			os.makedirs(saveDir)
 		imp.show()
-		crasr
+		if saveType == "Standard ImageJ TIF":
+			IJ.saveAs(imp, "Tiff", saveDir + "/" + outname + ".tif");
+		elif saveType == "OME-TIF":
+			IJ.saveAs(imp, "OME-Tiff", saveDir + "/" + outname + ".ome.tif")
+		
+		
 		imp.close()
 run()
 
