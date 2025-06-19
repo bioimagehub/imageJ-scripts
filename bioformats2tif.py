@@ -50,7 +50,7 @@ def process(srcDir, dstDir, currentDir, fileName, keepDirectories):
 		saveDir = currentDir.replace(srcDir, dstDir) if keepDirectories else dstDir
 		if not os.path.exists(saveDir):
 			os.makedirs(saveDir)
-		imp.show()
+		#imp.show()
 		if saveType == "Standard ImageJ TIF":
 			IJ.saveAs(imp, "Tiff", saveDir + "/" + outname + ".tif");
 		elif saveType == "OME-TIF":
